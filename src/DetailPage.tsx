@@ -153,14 +153,8 @@ export default function DetailPage(props: DetailPageProps) {
     const status = studyDesc === undefined ? '' : studyDesc.FullStudiesResponse.FullStudies[0].Study.ProtocolSection.StatusModule.OverallStatus;
     switch (status) {
       case 'Completed':
-        return <Chip
-          sx={{
-            marginTop: '8px',
-          }}
-          label={status}
-          color={'success'}
-        />
       case 'Active':
+      case 'Recruiting':
         return <Chip
           sx={{
             marginTop: '8px',
