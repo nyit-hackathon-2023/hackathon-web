@@ -1,4 +1,4 @@
-import {Box, CircularProgress, TextField} from "@mui/material";
+import {Box, Button, CircularProgress, TextField} from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
@@ -17,7 +17,7 @@ function requestOpenAI(
 ) {
   onStart()
   const configuration = new Configuration({
-    apiKey: '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',
+    apiKey: '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',
   });
   const openai = new OpenAIApi(configuration);
   openai.createChatCompletion({
@@ -45,8 +45,6 @@ export default function DetailPage(props: DetailPageProps) {
 
   let { disease } = useParams();
   const diseaseStr = disease as string;
-
-  console.log(`param=${diseaseStr}`)
 
   const [explain, setExplain] = useState('');
   const [explainIsLoading, setExplainIsLoading] = useState(false);
