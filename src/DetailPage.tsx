@@ -1,13 +1,13 @@
-import {Box, Button, Chip, CircularProgress, TextField} from "@mui/material";
+import {Box, Button, Chip, CircularProgress, IconButton, TextField} from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import * as React from "react";
-import {ExpandMoreRounded} from "@mui/icons-material";
+import {ArrowBackRounded, ExpandMoreRounded} from "@mui/icons-material";
 import {ChatCompletionRequestMessageRoleEnum, Configuration, CreateChatCompletionResponse, OpenAIApi} from "openai";
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 function requestOpenAI(
   message: string,
@@ -173,6 +173,8 @@ export default function DetailPage(props: DetailPageProps) {
     }
   }
 
+  const navigate = useNavigate();
+
   return (
     <Box
       width={'900px'}
@@ -183,6 +185,16 @@ export default function DetailPage(props: DetailPageProps) {
         paddingBottom: '16px',
       }}
     >
+      <IconButton
+        sx={{
+          alignSelf: 'start'
+        }}
+        onClick={() => {
+          navigate(`/`)
+        }}
+      >
+        <ArrowBackRounded/>
+      </IconButton>
       <Box
         sx={{
           backgroundImage: "url('https://www.linkpicture.com/q/undraw_medicine_b-1-ol.svg')"
