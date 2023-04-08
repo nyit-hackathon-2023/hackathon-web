@@ -17,7 +17,7 @@ function requestOpenAI(
 ) {
   onStart()
   const configuration = new Configuration({
-    apiKey: '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',
+    apiKey: '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',
   });
   const openai = new OpenAIApi(configuration);
   openai.createChatCompletion({
@@ -43,14 +43,14 @@ interface DetailPageProps {
 
 export default function DetailPage(props: DetailPageProps) {
 
-  let { diseaseParam } = useParams();
-  const disease = diseaseParam as string;
+  let { disease } = useParams();
+  const diseaseStr = disease as string;
 
-  console.log(`param=${disease}`)
+  console.log(`param=${diseaseStr}`)
 
   const [explain, setExplain] = useState('');
   const [explainIsLoading, setExplainIsLoading] = useState(false);
-  const explainMessage = `explain ${disease}`;
+  const explainMessage = `explain ${diseaseStr}`;
 
   const [studyDesc, setStudyDesc] = useState<any>()
   const [studyDescIsLoading, setStudyDescIsLoading] = useState(false);
@@ -61,14 +61,14 @@ export default function DetailPage(props: DetailPageProps) {
 
   const [suggestion, setSuggestion] = useState('');
   const [suggestionIsLoading, setSuggestionIsLoading] = useState(false);
-  const suggestionMessage = `give me some suggestion about this disease: ${disease}`;
+  const suggestionMessage = `give me some suggestion about this disease: ${diseaseStr}`;
 
   useEffect(() => {
     requestExplain()
     requestStudyDesc()
     requestStudySummary()
     requestSuggestion()
-  }, [disease])
+  }, [diseaseStr])
 
   function requestExplain() {
     requestOpenAI(
@@ -90,7 +90,7 @@ export default function DetailPage(props: DetailPageProps) {
   function requestStudyDesc() {
     setStudyDescIsLoading(true)
     setStudyDesc(undefined)
-    const url = `https://clinicaltrials.gov/api/query/full_studies?expr=${disease.replaceAll(' ', '+')}&fmt=json`
+    const url = `https://clinicaltrials.gov/api/query/full_studies?expr=${diseaseStr.replaceAll(' ', '+')}&fmt=json`
     fetch(url)
       .then((response) => {
         return response.text()
@@ -108,7 +108,7 @@ export default function DetailPage(props: DetailPageProps) {
   function requestStudySummary() {
     setStudySummary('')
     setStudySummaryIsLoading(true)
-    const url = `https://clinicaltrials.gov/api/query/full_studies?expr=${disease.replaceAll(' ', '+')}&fmt=json`
+    const url = `https://clinicaltrials.gov/api/query/full_studies?expr=${diseaseStr.replaceAll(' ', '+')}&fmt=json`
     fetch(url)
       .then((response) => {
         return response.text()
@@ -170,7 +170,7 @@ export default function DetailPage(props: DetailPageProps) {
           marginBottom: '50px',
         }}
       >
-        {disease}
+        {diseaseStr}
       </Typography>
       <Accordion>
         <AccordionSummary
@@ -212,21 +212,21 @@ export default function DetailPage(props: DetailPageProps) {
                 whiteSpace: 'pre-wrap',
               }}
             >
-              {`Title: ${studyDesc.FullStudiesResponse.FullStudies[0].Study.ProtocolSection.IdentificationModule.BriefTitle}`}
+              {`Title: ${studyDesc === undefined ? '' : studyDesc.FullStudiesResponse.FullStudies[0].Study.ProtocolSection.IdentificationModule.BriefTitle}`}
             </Typography>
             <Typography
               sx={{
                 whiteSpace: 'pre-wrap',
               }}
             >
-              {`StatusVerifiedDate: ${studyDesc.FullStudiesResponse.FullStudies[0].Study.ProtocolSection.StatusModule.StatusVerifiedDate}`}
+              {`StatusVerifiedDate: ${studyDesc === undefined ? '' : studyDesc.FullStudiesResponse.FullStudies[0].Study.ProtocolSection.StatusModule.StatusVerifiedDate}`}
             </Typography>
             <Typography
               sx={{
                 whiteSpace: 'pre-wrap',
               }}
             >
-              {`OverallStatus: ${studyDesc.FullStudiesResponse.FullStudies[0].Study.ProtocolSection.StatusModule.OverallStatus}`}
+              {`OverallStatus: ${studyDesc === undefined ? '' : studyDesc.FullStudiesResponse.FullStudies[0].Study.ProtocolSection.StatusModule.OverallStatus}`}
             </Typography>
           </Box>
           <Box
