@@ -48,7 +48,8 @@ export default function SignInSide() {
       email: data.get('query'),
       password: data.get('password'),
     });
-    naviagte('/chat');
+    const value=data.get('query');
+    naviagte(`/detail/${value}`);
   };
 
   return (
