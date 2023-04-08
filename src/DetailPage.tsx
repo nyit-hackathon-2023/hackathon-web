@@ -17,7 +17,7 @@ function requestOpenAI(
 ) {
   onStart()
   const configuration = new Configuration({
-    apiKey: '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',
+    apiKey: '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',
   });
   const openai = new OpenAIApi(configuration);
   openai.createChatCompletion({
@@ -50,18 +50,18 @@ export default function DetailPage(props: DetailPageProps) {
 
   const [explain, setExplain] = useState('');
   const [explainIsLoading, setExplainIsLoading] = useState(false);
-  const explainMessage = `explain ${diseaseStr}`;
+  const explainMessage = `Explain the disease in layman language: ${diseaseStr}`;
 
   const [studyDesc, setStudyDesc] = useState<any>()
   const [studyDescIsLoading, setStudyDescIsLoading] = useState(false);
 
   const [studySummary, setStudySummary] = useState('');
   const [studySummaryIsLoading, setStudySummaryIsLoading] = useState(false);
-  const studySummaryMessage = `summary:\n {{message}}`;
+  const studySummaryMessage = `Summarize this article:\n {{message}}`;
 
   const [suggestion, setSuggestion] = useState('');
   const [suggestionIsLoading, setSuggestionIsLoading] = useState(false);
-  const suggestionMessage = `give me some suggestion about this disease: ${diseaseStr}`;
+  const suggestionMessage = `Give me some suggestions about maintaining a healthy lifestyle if I have the disease: ${diseaseStr}`;
 
   useEffect(() => {
     requestExplain()
@@ -153,31 +153,44 @@ export default function DetailPage(props: DetailPageProps) {
 
   return (
     <Box
-      width={'800px'}
+      width={'900px'}
       margin={'0 auto'}
       display={'flex'}
       flexDirection={'column'}
+      sx={{
+        paddingBottom: '16px',
+      }}
     >
-      <Typography
-        variant={'h5'}
+      <Box
         sx={{
-          width: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-          alignSelf: 'center',
-          textAlign: 'center',
-          marginTop: '50px',
-          marginBottom: '50px',
+          backgroundImage: "url('https://www.linkpicture.com/q/undraw_medicine_b-1-ol.svg')"
         }}
       >
-        {diseaseStr}
-      </Typography>
+        <Typography
+          variant={'h4'}
+          fontWeight={'bold'}
+          sx={{
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            alignSelf: 'center',
+            textAlign: 'center',
+            marginTop: '50px',
+            marginBottom: '50px',
+            textTransform: 'capitalize',
+          }}
+        >
+          {diseaseStr}
+        </Typography>
+      </Box>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreRounded />}
           id="explain"
         >
-          <Typography>Explanation</Typography>
+          <Typography
+            fontWeight={'bold'}
+          >Explanation</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography
@@ -201,6 +214,7 @@ export default function DetailPage(props: DetailPageProps) {
           id="studyDesc"
         >
           <Typography
+            fontWeight={'bold'}
           >Study desc</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -241,7 +255,9 @@ export default function DetailPage(props: DetailPageProps) {
           expandIcon={<ExpandMoreRounded />}
           id="studySummary"
         >
-          <Typography>Study Summary</Typography>
+          <Typography
+            fontWeight={'bold'}
+          >Study Summary</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography
@@ -264,7 +280,9 @@ export default function DetailPage(props: DetailPageProps) {
           expandIcon={<ExpandMoreRounded />}
           id="suggestion"
         >
-          <Typography>Suggestion</Typography>
+          <Typography
+            fontWeight={'bold'}
+          >Suggestion</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography
