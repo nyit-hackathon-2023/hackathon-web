@@ -14,7 +14,13 @@ interface TestChatPageProps {
 export default function TestChatPage() {
   const [response, setResponse] = useState('')
 
-  function request() {
+  function request(
+    message: string,
+    onRequestStart: () => void,
+    onRequestSuccess: (response: string) => void,
+    onRequestError: () => void,
+  ) {
+    onRequestStart()
     const configuration = new Configuration({
       apiKey: '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',
     });
@@ -23,24 +29,24 @@ export default function TestChatPage() {
       model: 'gpt-3.5-turbo',
       messages: [
         {
-          content: ``,
+          content: message,
           role: ChatCompletionRequestMessageRoleEnum.User,
         }
       ]
     })
       .then((response) => {
         const r: CreateChatCompletionResponse = response.data;
-        setResponse(r.choices[0].message!!.content);
+        onRequestSuccess(r.choices[0].message!!.content);
       })
       .catch(() => {
-        setResponse('error');
+        onRequestError();
       })
   }
 
   return (
     <Box>
       <Button
-        onClick={() => request()}
+        onClick={() => request(``, () => {}, (message) => { setResponse(message)}, () => {})}
       >
         {'Request'}
       </Button>
