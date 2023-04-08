@@ -22,7 +22,7 @@ export default function TestChatPage() {
   ) {
     onRequestStart()
     const configuration = new Configuration({
-      apiKey: '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',
+      apiKey: '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',
     });
     const openai = new OpenAIApi(configuration);
     openai.createChatCompletion({

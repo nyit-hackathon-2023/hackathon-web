@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/chat' element={<TestChatPage/>} ></Route>
-        <Route path='/detail' element={<DetailPage/>} ></Route>
+        <Route path='/detail/:disease' element={<DetailPage />} ></Route>
       </Routes>
     </BrowserRouter>
   );
