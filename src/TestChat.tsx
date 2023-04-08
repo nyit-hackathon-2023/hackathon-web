@@ -22,7 +22,7 @@ export default function TestChatPage() {
   ) {
     onRequestStart()
     const configuration = new Configuration({
-      apiKey: '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',
+      apiKey: localStorage.getItem('apiKey') ?? '',
     });
     const openai = new OpenAIApi(configuration);
     openai.createChatCompletion({

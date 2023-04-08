@@ -1,4 +1,4 @@
-import {Box, Button, CircularProgress, TextField} from "@mui/material";
+import {Box, Button, Chip, CircularProgress, TextField} from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
@@ -17,7 +17,7 @@ function requestOpenAI(
 ) {
   onStart()
   const configuration = new Configuration({
-    apiKey: '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',
+    apiKey: localStorage.getItem('apiKey') ?? '',
   });
   const openai = new OpenAIApi(configuration);
   openai.createChatCompletion({
@@ -149,6 +149,36 @@ export default function DetailPage(props: DetailPageProps) {
     )
   }
 
+  function statusComponent() {
+    const status = studyDesc === undefined ? '' : studyDesc.FullStudiesResponse.FullStudies[0].Study.ProtocolSection.StatusModule.OverallStatus;
+    switch (status) {
+      case 'Completed':
+        return <Chip
+          sx={{
+            marginTop: '8px',
+          }}
+          label={status}
+          color={'success'}
+        />
+      case 'Active':
+        return <Chip
+          sx={{
+            marginTop: '8px',
+          }}
+          label={status}
+          color={'success'}
+        />
+      default:
+        return <Chip
+          sx={{
+            marginTop: '8px',
+          }}
+          label={status}
+          color={'error'}
+        />
+    }
+  }
+
   return (
     <Box
       width={'900px'}
@@ -238,7 +268,7 @@ export default function DetailPage(props: DetailPageProps) {
                 whiteSpace: 'pre-wrap',
               }}
             >
-              {`OverallStatus: ${studyDesc === undefined ? '' : studyDesc.FullStudiesResponse.FullStudies[0].Study.ProtocolSection.StatusModule.OverallStatus}`}
+              OverallStatus: {statusComponent()}
             </Typography>
           </Box>
           <Box
